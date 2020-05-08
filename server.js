@@ -4,9 +4,13 @@ const path = require('path')
 const routes = require('./routes');
 
 var teste = []
-teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'jpg-t.jpg')), name: 'jpg' })
-teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'png-t.png')), name: 'png' })
-teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'webp-t.webp')), name: 'webp' })
+teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'semfoto.webp')), name: 'semfoto', type: 'webp'})
+teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'jpg-t.jpg')), name: 'jpg', type: 'jpg' })
+teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'png-t.png')), name: 'png', type: 'png' })
+teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'webp-t.webp')), name: 'webp', type: 'webp' })
+
+//path.extname(path.resolve(__dirname, 'semfoto.webp'))
+
 
 const server = http2.createSecureServer({
    key: fs.readFileSync('localhost-privkey.pem'),
@@ -15,33 +19,24 @@ const server = http2.createSecureServer({
 
 server.on('stream', (stream, headers) => {
    console.log(headers[":path"]) // req
-   if (headers[":path"] == '/png') {
-      // stream is a Duplex
-      stream.respond({
-         'content-type': 'image/jpg',
-         ':status': 200
-      });
-      console.log('PNG---')
-      stream.end(teste[1].img);
-   } else if (headers[":path"] == '/jpg') {
-      stream.respond({
-         'content-type': 'image/jpg',
-         ':status': 200
-      });
-      console.log('JPG---')
-      stream.end(teste[0].img);
-   } else if (headers[":path"] == '/webp') {
-      stream.respond({
-         'content-type': 'image/webp',
-         ':status': 200
-      });
-      console.log('WEBP---')
-      stream.end(teste[2].img);
-   } else {
-      stream.respond({ ':status': 200 });
-      stream.end('some data');
+   function indexImg(header) {
+      const reqHeaders = header.split("/")
+      if (reqHeaders[1] != undefined) {
+         const ind = teste.findIndex(obj => obj.name == reqHeaders[1])
+         if (ind != -1) {
+            return ind
+         }
+      }
+      return 0
    }
+   const index = indexImg(headers[":path"])
+   // stream is a Duplex
+   stream.respond({
+      'content-type': 'image/' + teste[index].type,
+      ':status': 200
+   });
+   console.log('index ' + index)
+   stream.end(teste[index].img);
 });
-
 server.listen(8443);
 
