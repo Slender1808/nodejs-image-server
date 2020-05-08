@@ -1,6 +1,7 @@
-const http2 = require('http2');
-const fs = require('fs');
+const http2 = require('http2')
+const fs = require('fs')
 const path = require('path')
+let router = require('./routes');
 
 var img = []
 img.push({ testeJPG: fs.readFileSync(path.resolve(__dirname, 'jpg-t.jpg')) })
@@ -21,5 +22,4 @@ server.on('stream', (stream, headers) => {
     console.log(img)
     stream.end(img[0].testeJPG);
 });
-
 server.listen(8443);
