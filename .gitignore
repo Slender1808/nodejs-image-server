@@ -1,3 +1,7 @@
+#ssl
+localhost-cert.pem
+localhost-privkey.pem
+
 # Logs
 logs
 *.log
