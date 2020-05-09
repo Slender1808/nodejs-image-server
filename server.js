@@ -1,42 +1,44 @@
 const http2 = require('http2')
 const fs = require('fs')
-const path = require('path')
-const routes = require('./routes');
+const dirTree = require('./teste')
 
-var teste = []
-teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'semfoto.webp')), name: 'semfoto', type: 'webp'})
-teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'jpg-t.jpg')), name: 'jpg', type: 'jpg' })
-teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'png-t.png')), name: 'png', type: 'png' })
-teste.push({ img: fs.readFileSync(path.resolve(__dirname, 'webp-t.webp')), name: 'webp', type: 'webp' })
-
-//path.extname(path.resolve(__dirname, 'semfoto.webp'))
-
+var dir = dirTree('public')
 
 const server = http2.createSecureServer({
-   key: fs.readFileSync('localhost-privkey.pem'),
-   cert: fs.readFileSync('localhost-cert.pem')
-});
+  key: fs.readFileSync('localhost-privkey.pem'),
+  cert: fs.readFileSync('localhost-cert.pem')
+})
 
 server.on('stream', (stream, headers) => {
-   console.log(headers[":path"]) // req
-   function indexImg(header) {
-      const reqHeaders = header.split("/")
-      if (reqHeaders[1] != undefined) {
-         const ind = teste.findIndex(obj => obj.name == reqHeaders[1])
-         if (ind != -1) {
-            return ind
-         }
+  function indexImg(header) {
+    var reqHeaders = header.split("/")
+    if (reqHeaders.length > 2) {
+      console.log('>1')
+      var aaa = 'dir.children'
+      for (let i = 0; i < reqHeaders.length; i++) {
+        var r = aaa + '.findIndex(obj => obj.name == reqHeaders[' + i + '])'
+        var b = eval(r)
+        if (b >= 0) {
+          if (i == reqHeaders.length - 1) {
+            aaa = aaa + '[' + b + ']'
+          } else {
+            aaa = aaa + '[' + b + '].children'
+          }
+        }
       }
-      return 0
-   }
-   const index = indexImg(headers[":path"])
-   // stream is a Duplex
-   stream.respond({
-      'content-type': 'image/' + teste[index].type,
-      ':status': 200
-   });
-   console.log('index ' + index)
-   stream.end(teste[index].img);
-});
-server.listen(8443);
+      return eval(aaa + '.byte')
+    } else {
+      var i = dir.children.findIndex(obj => obj.name == reqHeaders[1])
+      return dir.children[i].byte
+    }
+  }
 
+  // stream is a Duplex
+  stream.respond({
+    'content-type': 'image/jpg',
+    ':status': 200
+  });
+  //console.log('index ' + index)
+  stream.end(indexImg(headers[":path"]));
+});
+server.listen(8443)
