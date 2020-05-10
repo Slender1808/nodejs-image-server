@@ -1,0 +1,38 @@
+{
+    "path": "public",
+    "name": "public",
+    "type": "folder",
+    "children": [
+        {
+            "path": "public/img",
+            "name": "img",
+            "type": "folder",
+            "children": [
+                {
+                    "path": "public/img/jpg-t.jpg",
+                    "name": "jpg-t.jpg",
+                    "type": "file",
+                    "byte": "0000000"
+                },
+                {
+                    "path": "public/img/png-t.png",
+                    "name": "png-t.png",
+                    "type": "file",
+                    "byte": "0000000"
+                },
+                {
+                    "path": "public/img/webp-t.webp",
+                    "name": "webp-t.webp",
+                    "type": "file",
+                    "byte": "0000000"
+                }
+            ]
+        },
+        {
+            "path": "public/semfoto.webp",
+            "name": "semfoto.webp",
+            "type": "file",
+            "byte": "0000000"
+        }
+    ]
+}
