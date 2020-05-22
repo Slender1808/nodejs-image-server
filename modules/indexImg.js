@@ -1,9 +1,9 @@
 module.exports = function indexImg(header, dir) {
   const reqHeaders = header.split("/")
   if (reqHeaders.length >= 2) {
-    var codString = "dir.children"
+    let codString = "dir.children"
     for (let i = 0; i < reqHeaders.length; i++) if ("" != reqHeaders[i]) {
-      var c = eval(codString + ".findIndex(obj => obj.name == reqHeaders[" + i + "])")
+      let c = eval(codString + ".findIndex(obj => obj.name == reqHeaders[" + i + "])")
       if (!(c > -1)) return ["jpg", ""]
       c >= 0 && (codString = i == reqHeaders.length - 1 ? codString + "[" + c + "]" : codString + "[" + c + "].children")
     }

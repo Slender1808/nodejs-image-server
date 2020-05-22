@@ -1,7 +1,7 @@
 const http2 = require('http2')
 const fs = require('fs')
 const dirTree = require('./modules/dirTree')
-const indexImg = require('./modules/indexImg')
+const indexImg = require('./modules/indexImg-2')
 
 var dir = dirTree('public')
 
