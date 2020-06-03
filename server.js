@@ -1,36 +1,16 @@
 const http2 = require('http2')
 const fs = require('fs')
 const dirTree = require('./modules/dirTree.js')
-const indexFile = require('./modules/indexFile.js')
 const searchFile = require('./modules/searchFile.js')
-const searchIndex = require('./modules/searchIndex.js')
+const searchReq = require('./modules/searchReq.js')
 
 var dir = dirTree('public')
 
-var index = indexFile(dir)
+var index = searchFile.indexFile(dir)
 
-//teste('/img/jpg-t.jpg', dir ,index)
+//var arrObj = searchFile.searchIndex(dir, dir, index)
 
-
-var arrObj = searchIndex(dir, dir, index)
-
-function searchReq(header, arrObj) {
-  let arryHeaders = header.split("/")
-  let req = arryHeaders.pop()
-
-
-  let arrIndex = []
-  let ind = 0
-  for (let i = 0; i < arrObj.length; i++) {
-    if (arrObj[i][req] != undefined) {
-      arrIndex[ind] = arrObj[i][req]
-      ind++
-      break
-    }
-  }
-  return arrIndex
-}
-
+var arrObj = searchFile.teste(dir)
 console.log(arrObj)
 
 const server = http2.createSecureServer({
