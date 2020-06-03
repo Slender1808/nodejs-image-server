@@ -1,5 +1,6 @@
 module.exports = function indexImg(header, dir) {
   const reqHeaders = header.split("/")
+  console.log(reqHeaders)
   if (reqHeaders.length >= 2) {
     let i = 1
     if (reqHeaders[i] != "") {
