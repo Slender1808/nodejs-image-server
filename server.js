@@ -8,7 +8,7 @@ var dir = dirTree('public')
 
 var index = indexFile(dir)
 
-searchFile('/img/jpg-t.jpg', dir,index)
+searchFile('/img/png-t.png', dir ,index)
 
 const server = http2.createSecureServer({
   key: fs.readFileSync('./localhost-privkey.pem'),
@@ -18,10 +18,11 @@ const server = http2.createSecureServer({
 server.on('stream', (stream, headers) => {
   // stream is a Duplex
   const res = searchFile(headers[":path"], dir, index)
+  console.log(res.path)
   stream.respond({
-    'content-type': 'image/' + res[1],
+    'content-type': 'image/jpg',
     ':status': 200
   });
-  stream.end(res[0])
+  stream.end(res.byte)
 })
 server.listen(8443)
