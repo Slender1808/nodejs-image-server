@@ -1,13 +1,9 @@
-function teste(dir){
-  return searchIndex(dir, dir, indexFile(dir))
-}
-
 //  { 'jpg-t.jpg': 0 }
 let indice = []
 function indexFile(obj) {
   for (let i = 0; i < obj.children.length; i++) {
 
-    const name = obj.children[i].name
+    const name = obj.children[i].path.replace("public", "")
     const arr = new Object([{ [name]: i }])
     indice.push(arr[0])
     if (obj.children[i].type == "folder") {
@@ -21,11 +17,13 @@ function indexFile(obj) {
 let test = []
 function searchIndex(obj, dir, index) {
   for (let i = 0; i < obj.children.length; i++) {
-
-    const name = obj.children[i].name
-    const search = searchFile(obj.children[i].path, dir, index)
+    const name = obj.children[i].path.replace("public", "")
+    const search = searchFile(name, index)
 
     const arr = new Object([{ [name]: search }])
+
+    console.log('name ' + name)
+    console.log('search ' + search)
 
     test.push(arr[0])
     if (eval(search + '.type') == "folder") {
@@ -37,18 +35,22 @@ function searchIndex(obj, dir, index) {
 }
 
 //   dir.children[0].children[0]
-function searchFile(header, dir, index) {
-  const arryHeaders = header.split("/")
-
+function searchFile(header, index) {
+  let arryHeaders = header.split("/")
+  console.log(arryHeaders)
+  console.log('--------')
   let arrIndex = []
   let ind = 0
 
-  for (let i = 1; i < arryHeaders.length; i++) {
-    let file = arryHeaders[i]
+  for (var sub = 1; sub < arryHeaders.length; sub++) {
+    let file = '/' + arryHeaders[sub]
     //  Buscando no index o file
     for (let i = 0; i < index.length; i++) {
       if (index[i][file] != undefined) {
         arrIndex[ind] = index[i][file]
+        const pos = sub + 1
+        arryHeaders[pos] = file + '/' + arryHeaders[pos]
+        console.log('arryHeaders ' + arryHeaders[pos])
         ind++
         break
       }
@@ -65,7 +67,6 @@ function searchFile(header, dir, index) {
 }
 
 module.exports = {
-  teste,
   indexFile,
   searchIndex,
   searchFile,

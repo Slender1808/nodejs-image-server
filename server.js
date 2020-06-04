@@ -5,13 +5,9 @@ const searchFile = require('./modules/searchFile.js')
 const searchReq = require('./modules/searchReq.js')
 
 var dir = dirTree('public')
-
-var index = searchFile.indexFile(dir)
-
-//var arrObj = searchFile.searchIndex(dir, dir, index)
-
-var arrObj = searchFile.teste(dir)
-console.log(arrObj)
+console.log(searchFile.indexFile(dir))
+console.log('           ')
+var arrObj = searchFile.searchIndex(dir, dir, searchFile.indexFile(dir))
 
 const server = http2.createSecureServer({
   key: fs.readFileSync('./localhost-privkey.pem'),
