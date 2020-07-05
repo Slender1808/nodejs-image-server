@@ -1,10 +1,10 @@
 const http2 = require('http2')
 const fs = require('fs')
-const dirTree = require('./modules/dirTree')
+
+const routes = require('./routes')
+const dirTree = require('../modules/dirTree')
 
 var dir = dirTree('public')
-
-const routes = require('./server/routes')
 
 const server = http2.createSecureServer({
   key: fs.readFileSync('./localhost-privkey.pem'),
@@ -14,7 +14,6 @@ const server = http2.createSecureServer({
 server.on('stream', (stream, headers) => {
   // stream is a Duplex
   let res = routes(headers[":path"],dir)
-  console.log(res)
 
   stream.respond({
     'content-type': res.contentType,
@@ -22,4 +21,6 @@ server.on('stream', (stream, headers) => {
   });
   stream.end(res.byte)
 })
+
 server.listen(8443)
+console.log('Server On')

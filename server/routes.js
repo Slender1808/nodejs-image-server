@@ -2,7 +2,6 @@ const fs = require('fs')
 const JSONPath = require('jsonpath')
 
 module.exports = function routes(headers, dir) {
-  console.log(headers)
 
   const result404 = JSONPath.query(dir, "$..[?(@.type=='file' && @.path=='public/semfoto.webp')]")
   result404[0].byte = fs.readFileSync(result404[0].path)
