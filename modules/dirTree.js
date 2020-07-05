@@ -1,4 +1,6 @@
-const fs = require('fs'), path = require('path');
+const fs = require('fs')
+const path = require('path')
+const switchContentType = require('./switchContentType')
 
 module.exports = function dirTree(filename) {
   const stats = fs.lstatSync(filename)
@@ -15,8 +17,8 @@ module.exports = function dirTree(filename) {
       // Assuming it's a file. In real life it could be a symlink or
       // something else!
       info.type = 'file',
-      info.byte = fs.readFileSync(filename),
-      info.ext = path.extname(filename)
+      info.ext = path.extname(filename),
+      info = switchContentType(info)
     ),
     info
 }

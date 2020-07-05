@@ -1,5 +1,5 @@
 const fs = require('fs')
-const contentFilePath = '../test/base.json'
+const contentFilePath = 'base.json'
 
 function save(content) {
   console.log('Json Salvo')
