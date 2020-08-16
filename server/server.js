@@ -1,6 +1,5 @@
 const http = require("http");
 const fs = require("fs");
-//const path = require("path");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
 const JSONPath = require("jsonpath");
@@ -18,26 +17,30 @@ let data = JSON.stringify(tree);
 fs.writeFileSync("base.json", data);
 
 // Carregando imagem de 404
-const result404 = fs.createReadStream("public/semfoto.webp");
+const result404 = "image not found";
 
 http
   .createServer((request, response) => {
     console.log(request.url);
     let raw;
+    let codHTML = 200;
 
     // Busca pelo arquivo
-    const res = JSONPath.query(tree, `$..[?(@.path == '${request.url}')]`)
+    const res = JSONPath.query(tree, `$..[?(@.path == '${request.url}')]`);
 
     console.log("-----------");
     console.log(res);
 
     if (res[0] != undefined) {
+      codHTML = 200;
       if (res[0].type != "directory") {
         raw = fs.createReadStream("public" + res[0].path);
       } else {
         raw = JSON.stringify(res);
       }
     } else {
+      console.log("404");
+      codHTML = 404;
       raw = result404;
     }
 
@@ -64,16 +67,16 @@ http
     // Note: This is not a conformant accept-encoding parser.
     // See https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3
     if (/\bdeflate\b/.test(acceptEncoding)) {
-      response.writeHead(200, { "Content-Encoding": "deflate" });
+      response.writeHead(codHTML, { "Content-Encoding": "deflate" });
       pipeline(raw, zlib.createDeflate(), response, onError);
     } else if (/\bgzip\b/.test(acceptEncoding)) {
-      response.writeHead(200, { "Content-Encoding": "gzip" });
+      response.writeHead(codHTML, { "Content-Encoding": "gzip" });
       pipeline(raw, zlib.createGzip(), response, onError);
     } else if (/\bbr\b/.test(acceptEncoding)) {
-      response.writeHead(200, { "Content-Encoding": "br" });
+      response.writeHead(codHTML, { "Content-Encoding": "br" });
       pipeline(raw, zlib.createBrotliCompress(), response, onError);
     } else {
-      response.writeHead(200, {});
+      response.writeHead(codHTML, {});
       pipeline(raw, response, onError);
     }
   })
