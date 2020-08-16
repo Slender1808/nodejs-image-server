@@ -1,13 +1,17 @@
 const http = require("http");
 const fs = require("fs");
+//const path = require("path");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
-
-const routes = require("./routes");
+const JSONPath = require("jsonpath");
 
 // Carregando diretorio public
 const dirTree = require("directory-tree");
 const tree = dirTree("public");
+
+JSONPath.apply(tree, "$..path", function (value) {
+  return value.replace("public", "");
+});
 
 // Salvando JSON do diretorio public
 let data = JSON.stringify(tree);
@@ -20,16 +24,18 @@ http
   .createServer((request, response) => {
     console.log(request.url);
     let raw;
-    const res = routes(request.url, tree);
+
+    // Busca pelo arquivo
+    const res = JSONPath.query(tree, `$..[?(@.path == '${request.url}')]`)
+
     console.log("-----------");
-    console.log(res)
-    if (res != undefined) {
-      if (res.type != "directory") {
-        raw = fs.createReadStream(res.path);
-        //request.setHeader('Content-Type', res.contentType);
+    console.log(res);
+
+    if (res[0] != undefined) {
+      if (res[0].type != "directory") {
+        raw = fs.createReadStream("public" + res[0].path);
       } else {
         raw = JSON.stringify(res);
-        //request.setHeader('Content-Type', "application/json");
       }
     } else {
       raw = result404;
