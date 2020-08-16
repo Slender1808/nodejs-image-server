@@ -1,6 +1,5 @@
 const http = require("http");
 const fs = require("fs");
-const JSONPath = require("jsonpath");
 const { pipeline } = require("stream");
 const zlib = require("zlib");
 
@@ -15,22 +14,16 @@ let data = JSON.stringify(tree);
 fs.writeFileSync("base.json", data);
 
 // Carregando imagem de 404
-const result404 = JSONPath.query(
-  tree,
-  "$..[?(@.type=='file' && @.path=='public/semfoto.webp')]"
-)[0];
-result404.byte = fs.createReadStream(result404.path);
+const result404 = fs.createReadStream("public/semfoto.webp");
 
 http
   .createServer((request, response) => {
     console.log(request.url);
     let raw;
-    let res;
-
-    res = routes(request.url, tree);
+    const res = routes(request.url, tree);
     console.log("-----------");
-    console.log(res);
-    if (res != 404) {
+    console.log(res)
+    if (res != undefined) {
       if (res.type != "directory") {
         raw = fs.createReadStream(res.path);
         //request.setHeader('Content-Type', res.contentType);
@@ -39,7 +32,7 @@ http
         //request.setHeader('Content-Type', "application/json");
       }
     } else {
-      raw = result404.byte;
+      raw = result404;
     }
 
     // Store both a compressed and an uncompressed version of the resource.
