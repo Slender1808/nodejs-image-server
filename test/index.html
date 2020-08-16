@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <img src="https://localhost:8443/img/jpg-t.jpg" alt="">
-</body>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe
+          class="embed-responsive-item"
+          src="http://localhost:80/public/img"
+          frameborder="0"
+        ></iframe>
+      </div>
+
+      <img
+        class="img-fluid"
+        src="http://localhost:80/public/img/jpg-t.jpg"
+        alt=""
+      />
+      <img
+        class="img-fluid"
+        src="http://localhost:80/public/img/png-t.png"
+        alt=""
+      />
+      <img
+        class="img-fluid"
+        src="http://localhost:80/public/img/webp-t.webp"
+        alt=""
+      />
+    </div>
+  </body>
 </html>
