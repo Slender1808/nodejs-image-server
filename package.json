@@ -1,7 +1,7 @@
 {
   "name": "nodejs-image-server",
-  "version": "0.13.0",
-  "description": "",
+  "version": "0.14.0",
+  "description": "Servidor dedicado a Imagem",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/Slender1808/nodejs-image-server.git"
   },
-  "author": "",
+  "author": "Jadson G. Matos",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Slender1808/nodejs-image-server/issues"
