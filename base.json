@@ -1,51 +1,66 @@
 {
-    "path": "public",
-    "name": "public",
-    "type": "folder",
-    "children": [
+  "path": "public",
+  "name": "public",
+  "type": "folder",
+  "contentType": "application/json",
+  "children": [
+    {
+      "path": "public/css",
+      "name": "css",
+      "type": "folder",
+      "contentType": "application/json",
+      "children": [
         {
-            "path": "public/css",
-            "name": "css",
-            "type": "folder",
-            "children": [
-                {
-                    "path": "public/css/bootstrap.min.css",
-                    "name": "bootstrap.min.css",
-                    "type": "file",
-                    "ext": ".css"
-                }
-            ]
-        },
-        {
-            "path": "public/img",
-            "name": "img",
-            "type": "folder",
-            "children": [
-                {
-                    "path": "public/img/jpg-t.jpg",
-                    "name": "jpg-t.jpg",
-                    "type": "file",
-                    "ext": ".jpg"
-                },
-                {
-                    "path": "public/img/png-t.png",
-                    "name": "png-t.png",
-                    "type": "file",
-                    "ext": ".png"
-                },
-                {
-                    "path": "public/img/webp-t.webp",
-                    "name": "webp-t.webp",
-                    "type": "file",
-                    "ext": ".webp"
-                }
-            ]
-        },
-        {
-            "path": "public/semfoto.webp",
-            "name": "semfoto.webp",
-            "type": "file",
-            "ext": ".webp"
+          "path": "public/css/bootstrap.min.css",
+          "name": "bootstrap.min.css",
+          "type": "file",
+          "ext": ".css",
+          "contentType": "text/css"
         }
-    ]
+      ]
+    },
+    {
+      "path": "public/favicon.ico",
+      "name": "favicon.ico",
+      "type": "file",
+      "ext": ".ico",
+      "contentType": "image/x-icon"
+    },
+    {
+      "path": "public/img",
+      "name": "img",
+      "type": "folder",
+      "contentType": "application/json",
+      "children": [
+        {
+          "path": "public/img/jpg-t.jpg",
+          "name": "jpg-t.jpg",
+          "type": "file",
+          "ext": ".jpg",
+          "contentType": "image/jpeg"
+        },
+        {
+          "path": "public/img/png-t.png",
+          "name": "png-t.png",
+          "type": "file",
+          "ext": ".png",
+          "contentType": "image/x-png"
+        },
+        {
+          "path": "public/img/webp-t.webp",
+          "name": "webp-t.webp",
+          "type": "file",
+          "ext": ".webp",
+          "contentType": "image/webp"
+        }
+      ]
+    },
+    {
+      "path": "public/semfoto.webp",
+      "name": "semfoto.webp",
+      "type": "file",
+      "ext": ".webp",
+      "contentType": "image/webp"
+    }
+  ]
 }

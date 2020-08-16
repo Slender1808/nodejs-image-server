@@ -10,15 +10,17 @@ module.exports = function dirTree(filename) {
   }
   return stats.isDirectory() ? (
     info.type = 'folder',
+    info.contentType = 'application/json',
     info.children = fs.readdirSync(filename).map(function (info) {
       return dirTree(filename + '/' + info)
     })
+    
   ) : (
       // Assuming it's a file. In real life it could be a symlink or
       // something else!
       info.type = 'file',
       info.ext = path.extname(filename),
-      info = switchContentType(info)
+      info.contentType = switchContentType(info.ext)
     ),
     info
 }
