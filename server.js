@@ -8,6 +8,7 @@ const JSONPath = require("jsonpath");
 const dirTree = require("directory-tree");
 const tree = dirTree("public");
 
+// Remove nome public da url
 JSONPath.apply(tree, "$..path", function (value) {
   return value.replace("public", "");
 });
@@ -58,9 +59,9 @@ if (cluster.isMaster) {
 
       // Busca pelo arquivo
       const res = JSONPath.query(tree, `$..[?(@.path == '${request.url}')]`);
-      
+
       console.log("Request to worker 🖥  " + cluster.worker.id);
-       
+
       if (res[0] != undefined) {
         codHTML = 200;
         if (res[0].type != "directory") {
