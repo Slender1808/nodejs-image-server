@@ -1,0 +1,2 @@
+sudo docker build -t image/nodejs-image-server .
+sudo docker run -p 80:80 -d image/nodejs-image-server
