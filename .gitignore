@@ -1,6 +1,9 @@
+#imagens
+*.jpg
 #ssl
-localhost-cert.pem
-localhost-privkey.pem
+*.pem
+*.key
+*.crt
 
 # Logs
 logs
