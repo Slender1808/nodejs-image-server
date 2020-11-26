@@ -1,8 +1,11 @@
 {
   "name": "nodejs-image-server",
-  "version": "0.20.0",
-  "description": "Servidor dedicado a Imagem",
+  "version": "0.3.0",
+  "description": "[![deepcode](https://www.deepcode.ai/api/gh/badge?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF0Zm9ybTEiOiJnaCIsIm93bmVyMSI6IlNsZW5kZXIxODA4IiwicmVwbzEiOiJub2RlanMtaW1hZ2Utc2VydmVyIiwiaW5jbHVkZUxpbnQiOmZhbHNlLCJhdXRob3JJZCI6MjExNzYsImlhdCI6MTU5NzcxNTU0N30.uuHZdyz7EBJsxqQWnLd-rFLhm9MJVbUG05T5wuasGJY)](https://www.deepcode.ai/app/gh/Slender1808/nodejs-image-server/_/dashboard?utm_content=gh%2FSlender1808%2Fnodejs-image-server)",
   "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -11,14 +14,11 @@
     "type": "git",
     "url": "git+https://github.com/Slender1808/nodejs-image-server.git"
   },
-  "author": "Jadson G. Matos",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Slender1808/nodejs-image-server/issues"
   },
-  "homepage": "https://github.com/Slender1808/nodejs-image-server#readme",
-  "dependencies": {
-    "directory-tree": "^2.2.4",
-    "jsonpath": "^1.0.2"
-  }
+  "homepage": "https://github.com/Slender1808/nodejs-image-server#readme"
 }

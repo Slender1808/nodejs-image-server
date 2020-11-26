@@ -7,9 +7,10 @@
 The objective of this project is to make a micro server dedicated to serving images via http as efficiently as possible
 
 ----
-## Test diagram
+## diagram
 diagram of the generator directory tree by 
-[vtree](https://vanya.jp.net/vtree/)
+
+# ![cpf-validate](https://raw.githubusercontent.com/Slender1808/cpf-validate/master/flowchart.svg)
 
 ![alt text](https://raw.githubusercontent.com/Slender1808/nodejs-image-server/master/test/diagrama.svg)
 
