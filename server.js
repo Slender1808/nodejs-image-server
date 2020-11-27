@@ -43,7 +43,7 @@ server.on('stream', (stream, headers) => {
     stream.on('close', () => closeSync(fd));
   } catch (err) {
     /* Handle the error */
-    console.error(headers[":path"] + " :: erro 404 :: " + path)
+    console.error(headers[":path"] + " :: erro "+ err.errno +" :: " + path)
     stream.respond({
       ':status': 404
     });
