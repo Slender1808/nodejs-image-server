@@ -8,7 +8,11 @@ const {
 const {
   resolve
 } = require('path');
-const env = require('./env.js');
+
+let env
+if(!process.env.KEY){
+  env = require('./env.js')
+}
 
 const server = http2.createSecureServer({
   key: readFileSync(`./ssl/${process.env.KEY || env.KEY}`),

@@ -4,6 +4,7 @@
 *.pem
 *.key
 *.crt
+env.js
 
 # Logs
 logs
