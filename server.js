@@ -1,13 +1,22 @@
 const http2 = require('http2');
-const fs = require('fs');
+const {
+  readFileSync,
+  openSync,
+  fstatSync,
+  closeSync
+} = require('fs');
+const {
+  resolve
+} = require('path');
+const env = require('./env.js');
 
 const server = http2.createSecureServer({
-  key: fs.readFileSync('./ssl/server.key'),
-  cert: fs.readFileSync('./ssl/175054d19209152e.crt'),
+  key: readFileSync(`./ssl/${process.env.KEY || env.KEY}`),
+  cert: readFileSync(`./ssl/${process.env.CRT || env.CRT}`),
   ca: [
-    fs.readFileSync('./ssl/sf_bundle-g1.crt'),
-    fs.readFileSync('./ssl/sf_bundle-g2.crt'),
-    fs.readFileSync('./ssl/sf_bundle-g3.crt')
+    readFileSync(`./ssl/${process.env.CRT1 || env.CRT1}`),
+    readFileSync(`./ssl/${process.env.CRT2 || env.CRT2}`),
+    readFileSync(`./ssl/${process.env.CRT3 || env.CRT3}`),
   ]
 });
 
@@ -17,8 +26,8 @@ server.on('stream', (stream, headers) => {
   let fd;
 
   try {
-    fd = fs.openSync(`./public${headers[":path"]}`, 'r');
-    const stat = fs.fstatSync(fd);
+    fd = openSync(resolve(`./public${headers[":path"]}`), 'r');
+    const stat = fstatSync(fd);
     const headersRes = {
       'content-length': stat.size,
       'last-modified': stat.mtime.toUTCString(),
@@ -26,15 +35,15 @@ server.on('stream', (stream, headers) => {
     };
     stream.respondWithFD(fd, headersRes);
     console.error(headers[":path"] + " :: 200")
-    stream.on('close', () => fs.closeSync(fd));
+    stream.on('close', () => closeSync(fd));
   } catch (err) {
     /* Handle the error */
     console.error(headers[":path"] + " :: erro 404")
     stream.respond({
       ':status': 404
     });
-    stream.on('close', () => fs.closeSync(fd));
+    stream.on('close', () => closeSync(fd));
   }
 });
 
-server.listen(8443);
+server.listen(process.env.PORT || 8443);
