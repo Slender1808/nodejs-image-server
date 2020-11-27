@@ -28,9 +28,10 @@ server.on('error', (err) => console.error(err));
 
 server.on('stream', (stream, headers) => {
   let fd;
-
+  const path = resolve(`./public${headers[":path"]}`)
   try {
-    fd = openSync(resolve(`./public${headers[":path"]}`), 'r');
+    
+    fd = openSync(path, 'r');
     const stat = fstatSync(fd);
     const headersRes = {
       'content-length': stat.size,
@@ -42,7 +43,7 @@ server.on('stream', (stream, headers) => {
     stream.on('close', () => closeSync(fd));
   } catch (err) {
     /* Handle the error */
-    console.error(headers[":path"] + " :: erro 404")
+    console.error(headers[":path"] + " :: erro 404 :: " + path)
     stream.respond({
       ':status': 404
     });
