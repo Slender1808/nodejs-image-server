@@ -28,11 +28,13 @@ server.on('stream', (stream, headers) => {
     stream.respondWithFD(fd, headersRes);
   } catch (err) {
     /* Handle the error */
+    console.error(headers[":path"] + " erro 404")
     stream.respond({
       ':status': 404
     });
     stream.on('close', () => fs.closeSync(fd));
   } finally {
+    console.error(headers[":path"] + " 200")
     stream.on('close', () => fs.closeSync(fd));
   }
 });
