@@ -14,7 +14,6 @@ const server = http2.createSecureServer({
 server.on('error', (err) => console.error(err));
 
 server.on('stream', (stream, headers) => {
-  console.log(headers[":path"])
   let fd;
 
   try {
@@ -26,15 +25,14 @@ server.on('stream', (stream, headers) => {
       'content-type': 'text/plain; charset=utf-8'
     };
     stream.respondWithFD(fd, headersRes);
+    console.error(headers[":path"] + " :: 200")
+    stream.on('close', () => fs.closeSync(fd));
   } catch (err) {
     /* Handle the error */
-    console.error(headers[":path"] + " erro 404")
+    console.error(headers[":path"] + " :: erro 404")
     stream.respond({
       ':status': 404
     });
-    stream.on('close', () => fs.closeSync(fd));
-  } finally {
-    console.error(headers[":path"] + " 200")
     stream.on('close', () => fs.closeSync(fd));
   }
 });
