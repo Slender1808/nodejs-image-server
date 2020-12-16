@@ -36,14 +36,14 @@ server.on('stream', (stream, headers) => {
     const headersRes = {
       'content-length': stat.size,
       'last-modified': stat.mtime.toUTCString(),
-      'content-type': 'text/plain; charset=utf-8'
+      'content-type': 'image/*'
     };
     stream.respondWithFD(fd, headersRes);
     console.error(headers[":path"] + " :: 200")
     stream.on('close', () => closeSync(fd));
   } catch (err) {
     /* Handle the error */
-    console.log(err)
+    ///console.log(err)
     console.error(headers[":path"] + " :: erro "+ err.errno +" :: " + path)
     stream.respond({
       ':status': 404
