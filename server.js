@@ -6,11 +6,12 @@ const {
   closeSync
 } = require('fs');
 const {
-  resolve
+  resolve,
+  extname
 } = require('path');
 
 let env
-if(!process.env.KEY){
+if (!process.env.KEY) {
   env = require('./env.js')
 }
 
@@ -30,21 +31,21 @@ server.on('stream', (stream, headers) => {
   let fd;
   const path = resolve(`./public${headers[":path"]}`)
   try {
-    
+
     fd = openSync(path, 'r');
     const stat = fstatSync(fd);
     const headersRes = {
       'content-length': stat.size,
       'last-modified': stat.mtime.toUTCString(),
-      'content-type': 'image/*'
+      'content-type': 'image/' + extname(headers[":path"]).slice(1)
     };
     stream.respondWithFD(fd, headersRes);
-    console.error(headers[":path"] + " :: 200")
+    console.log(headers[":path"] + " :: 200")
     stream.on('close', () => closeSync(fd));
   } catch (err) {
     /* Handle the error */
     ///console.log(err)
-    console.error(headers[":path"] + " :: erro "+ err.errno +" :: " + path)
+    console.log(headers[":path"] + " :: erro " + err.errno + " :: " + path)
     stream.respond({
       ':status': 404
     });
